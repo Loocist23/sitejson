@@ -129,12 +129,11 @@
                 "Username": data.Username,
                 "Administrator": data.Administrator,
                 "Computer name": data["Computer name"],
+                "Domain": data.Domain,
                 "OS": data.OS,
                 "OS Version": data["Version"],
                 "System Architecture": data["System Architecture"],
-                "Initial Install Date": data["System Install Date"],
-                "Scan Date": data["Scan Date"],
-                "Scan ID": data["Scan ID"]
+                "Initial Install Date": data["System Install Date"]
             };
             const motherboardInfoData = {
                 "Motherboard Manufacturer": data["Manufacturer"],
@@ -167,9 +166,28 @@
             };
             const networkInfoData = {
                 "IP Address": data["IP Address"],
+                "Mac Address": data["MAC Address"],
                 "Gateway": data.Gateway,
                 "DNS": data.DNS,
                 "DHCP": data.DHCP
+            };
+            const storageInfoData = {
+                "Total Storage": data["Total Disk Space"],
+                "Free Storage": data["Total Free Space"],
+                "Storage Type": data["Disks Type"],
+                "Storage Model": data["Disks Model"],
+                "Disk Health": data["Disks Health"],
+                "Disk Partitions Type": data["Disks Partitions"],
+                "Bitlocker Status": data["Bitlocker Encryption"],
+            };
+            const miskInfoData = {
+                "Printers": data.Printers,
+                "Active Antivirus": data["Active Antivirus"],
+                "Other Antivirus": data["Other Antivirus"],
+                "Office Version": data["Office Version"],
+                "System Install Date": data["System Install Date"],
+                "Scan Date": data["Scan Date"],
+                "Scan ID": data["Scan ID"]
             };
 
             cardsContainer.appendChild(createCard('System Information', systemInfoData));
@@ -178,6 +196,7 @@
             cardsContainer.appendChild(createCard('RAM Information', ramInfoData));
             cardsContainer.appendChild(createCard('GPU Information', gpuInfoData));
             cardsContainer.appendChild(createCard('Network Information', networkInfoData));
+            cardsContainer.appendChild(createCard('Storage Information', storageInfoData));
 
             // Add more cards as needed
         }
