@@ -128,31 +128,40 @@
             const systemInfoData = {
                 "Username": data.Username,
                 "Administrator": data.Administrator,
-                "Model": data.Model,
-                "Manufacturer": data.Manufacturer,
-                "S/N": data["S/N"],
-                "BIOS Version": data["BIOS Version"],
                 "Computer name": data["Computer name"],
+                "OS": data.OS,
+                "OS Version": data["Version"],
+                "System Architecture": data["System Architecture"],
                 "Initial Install Date": data["System Install Date"],
                 "Scan Date": data["Scan Date"],
                 "Scan ID": data["Scan ID"]
             };
+            const motherboardInfoData = {
+                "Motherboard Manufacturer": data["Manufacturer"],
+                "Motherboard Model": data["Model"],
+                "BIOS Version": data["BIOS Version"]
+            };
             const cpuInfoData = {
-                "CPU Model": data["CPU Model"],
-                "CPU Cores": data["CPU Cores"],
-                "CPU Threads Per Core": data["CPU Threads Per Core"],
-                "CPU Max Speed": data["CPU Max Speed"],
-                "CPU Min Speed": data["CPU Min Speed"],
-                "CPU Architecture": data["CPU Architecture"]
+                "CPU Model": data["CPU"],
+                "CPU Cores": data["Number Of Cores"],
+                "Number Of Threads": data["Number Of Threads"],
+                "CPU Frequency": data["Frequency"],
+                "CPU Architecture": data["Architecture"],
+                "L2 Cache Size": data["L2 Cache Size"],
+                "L3 Cache Size": data["L3 Cache Size"],
+                "Socket": data["Socket"],
+                "Virtualization": data["Virtualization"]
             };
             const gpuInfoData = {
                 "GPU": data.GPU,
+                "GPU Memory": data["GPU VRAM"],
                 "GPU Driver Version": data["GPU Driver Version"],
                 "GPU Driver Date": data["GPU Driver Date"]
             };
             const ramInfoData = {
-                "Total RAM Amount": data["Total RAM amount"],
-                "RAM Speed": data["RAM speed"],
+                "RAM Manufacturer": data["RAM Manufacturer"],
+                "Total RAM Amount": data["Total RAM Amount"],
+                "RAM Speed": data["RAM Speed"],
                 "RAM Slot": data["RAM Slot"],
                 "RAM Channel": data["RAM Channel"]
             };
@@ -164,6 +173,7 @@
             };
 
             cardsContainer.appendChild(createCard('System Information', systemInfoData));
+            cardsContainer.appendChild(createCard('Motherboard Information', motherboardInfoData));
             cardsContainer.appendChild(createCard('CPU Information', cpuInfoData));
             cardsContainer.appendChild(createCard('RAM Information', ramInfoData));
             cardsContainer.appendChild(createCard('GPU Information', gpuInfoData));
