@@ -1,0 +1,61 @@
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px auto;
+    width: 90%;
+}
+
+.card {
+    background-color: #f9f9f9;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    /* Default to full width for mobile devices */
+    flex: 0 1 100%;
+}
+
+.header {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.item {
+    margin-bottom: 5px;
+}
+
+.key {
+    font-weight: bold;
+}
+
+.value {
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (min-width: 480px) {
+    /* 2 cards per row on small screens */
+    .card {
+        flex: 0 1 48%;
+    }
+}
+
+@media (min-width: 768px) {
+    /* 3 cards per row on medium screens and above */
+    .card {
+        flex: 0 1 30%;
+    }
+}
