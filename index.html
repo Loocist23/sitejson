@@ -1,15 +1,88 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Affichage JSON structuré en cartes</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Pose Detection with MediaPipeHands</title>
+    <style>
+        #output {
+            max-width: "300px";
+            max-height: "300px";
+        }
+    </style>
 </head>
 <body>
-    <div id="dropArea" class="drop-area">
-        <p>Glissez et déposez un fichier JSON ici</p>
-    </div>
-    <div id="cardsContainer" class="cards-container"></div>
-    <script src="script.js"></script>
+    <h1>Hand Pose Detection with MediaPipeHands</h1>
+    <input type="file" id="imageInput">
+    <img id="inputImage" src="#" alt="Selected Image" style="display:none;">
+    <canvas id="output" ></canvas>
+    <div id="result"></div>
+
+    <!-- Inclure les dépendances de MediaPipeHands et TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+
+    <!-- Vous devez explicitement inclure un backend TF.js si vous n'utilisez pas le bundle union de TF.js. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+
+    <!-- Inclure le modèle hand-pose-detection -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+    <script>
+        // Créer un détecteur
+        const model = handPoseDetection.SupportedModels.MediaPipeHands;
+        const detectorConfig = {
+            runtime: 'mediapipe',
+            solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/hands'
+        };
+        let detector;
+
+        handPoseDetection.createDetector(model, detectorConfig)
+            .then(det => {
+                detector = det;
+
+                // Sélectionner l'élément input pour charger l'image
+                const imageInput = document.getElementById('imageInput');
+                const inputImage = document.getElementById('inputImage');
+                const canvas = document.getElementById('output');
+
+                // Événement déclenché lorsqu'une image est sélectionnée
+                imageInput.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        inputImage.src = URL.createObjectURL(file);
+                        inputImage.onload = () => {
+                            canvas.width = inputImage.width;
+                            canvas.height = inputImage.height;
+                            const context = canvas.getContext('2d');
+                            context.drawImage(inputImage, 0, 0, inputImage.width, inputImage.height);
+
+                            // Détecter les poses de main sur l'image
+                            detectHandPoses(inputImage);
+                        };
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la création du détecteur:', error);
+            });
+
+        // Fonction pour détecter les poses de main sur une image
+        function detectHandPoses(image) {
+            const estimationConfig = { flipHorizontal: false };
+            detector.estimateHands(image, estimationConfig)
+                .then(hands => {
+                    // Vérifier s'il y a au moins une main détectée
+                    const hasHand = hands.length > 0;
+
+                    // Afficher le résultat
+                    const resultElement = document.getElementById('result');
+                    resultElement.innerText = hasHand ? 'Main détectée' : 'Aucune main détectée';
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la détection de la pose de la main:', error);
+                });
+        }
+    </script>
 </body>
 </html>
